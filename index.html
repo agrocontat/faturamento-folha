@@ -7,12 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-dark: #0a0f1a;
             --bg-card: #111827;
@@ -27,7 +22,6 @@
             --text-muted: #6b7280;
             --border: #1f2937;
         }
-
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg-dark);
@@ -37,414 +31,112 @@
                 radial-gradient(ellipse at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 90% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
         }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
+        .container { max-width: 1600px; margin: 0 auto; padding: 24px; }
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
+        .logo { display: flex; align-items: center; gap: 16px; }
         .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 20px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 20px;
         }
-
         .logo h1 {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 24px; font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary), var(--accent-green-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
-        .logo span {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 32px;
-        }
-
+        .logo span { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
         .stat-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            background: var(--bg-card); border-radius: 16px; padding: 24px;
+            border: 1px solid var(--border); transition: all 0.3s ease;
         }
-
-        .stat-card:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-2px);
-        }
-
+        .stat-card:hover { border-color: var(--accent-green); transform: translateY(-2px); }
         .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            font-family: 'Space Mono', monospace;
+            font-size: 13px; color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.5px; margin-bottom: 8px; font-family: 'Space Mono', monospace;
         }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
+        .stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); }
         .stat-value.green { color: var(--accent-green); }
         .stat-value.blue { color: var(--accent-blue); }
         .stat-value.orange { color: var(--accent-orange); }
-
-        .stat-change {
-            font-size: 13px;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
+        .stat-change { font-size: 13px; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
         .stat-change.positive { color: var(--accent-green); }
         .stat-change.negative { color: var(--accent-red); }
-
-        .filters {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
+        .filters { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; align-items: flex-end; }
+        .filter-group { display: flex; flex-direction: column; gap: 6px; }
         .filter-group label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Space Mono', monospace;
+            font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.5px; font-family: 'Space Mono', monospace;
         }
-
         select, input {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            min-width: 200px;
-            cursor: pointer;
-            transition: border-color 0.2s;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+            padding: 10px 14px; color: var(--text-primary); font-size: 14px;
+            font-family: 'DM Sans', sans-serif; min-width: 200px; cursor: pointer; transition: border-color 0.2s;
         }
-
-        select:hover, input:hover {
-            border-color: var(--accent-green);
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--accent-green);
-        }
-
+        select:hover, input:hover { border-color: var(--accent-green); }
+        select:focus, input:focus { outline: none; border-color: var(--accent-green); }
         .toggle-group {
-            display: flex;
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 4px;
-            border: 1px solid var(--border);
+            display: flex; background: var(--bg-card); border-radius: 8px;
+            padding: 4px; border: 1px solid var(--border);
         }
-
         .toggle-btn {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: 'DM Sans', sans-serif;
-            transition: all 0.2s;
+            padding: 8px 16px; border: none; background: transparent; color: var(--text-secondary);
+            cursor: pointer; border-radius: 6px; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
         }
-
-        .toggle-btn.active {
-            background: var(--accent-green);
-            color: var(--bg-dark);
-            font-weight: 600;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid var(--border);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 350px;
-        }
-
-        .ranking-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
+        .toggle-btn.active { background: var(--accent-green); color: var(--bg-dark); font-weight: 600; }
+        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
+        .card { background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        .card-subtitle { font-size: 12px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+        .chart-container { position: relative; height: 350px; }
+        .ranking-list { max-height: 400px; overflow-y: auto; }
         .ranking-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-            gap: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin: 0 -12px;
-            padding-left: 12px;
-            padding-right: 12px;
-            border-radius: 8px;
+            display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border);
+            gap: 12px; cursor: pointer; transition: background 0.2s; border-radius: 8px; margin-bottom: 4px;
         }
-
-        .ranking-item:hover {
-            background: var(--bg-card-hover);
-        }
-
+        .ranking-item:hover { background: var(--bg-card-hover); }
         .ranking-position {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 12px;
-            font-family: 'Space Mono', monospace;
+            width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center;
+            justify-content: center; font-weight: 700; font-size: 12px; font-family: 'Space Mono', monospace;
         }
-
         .ranking-position.gold { background: linear-gradient(135deg, #fbbf24, #d97706); }
         .ranking-position.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); }
         .ranking-position.bronze { background: linear-gradient(135deg, #d97706, #92400e); }
         .ranking-position.normal { background: var(--border); color: var(--text-secondary); }
-
-        .ranking-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .ranking-name {
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .ranking-details {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-        }
-
-        .ranking-value {
-            text-align: right;
-        }
-
-        .ranking-amount {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-green);
-        }
-
-        .ranking-change {
-            font-size: 11px;
-            font-family: 'Space Mono', monospace;
-        }
-
+        .ranking-info { flex: 1; min-width: 0; }
+        .ranking-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ranking-details { font-size: 12px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+        .ranking-value { text-align: right; }
+        .ranking-amount { font-size: 14px; font-weight: 600; color: var(--accent-green); }
+        .ranking-change { font-size: 11px; font-family: 'Space Mono', monospace; }
         .ranking-change.positive { color: var(--accent-green); }
         .ranking-change.negative { color: var(--accent-red); }
-
-        .table-container {
-            overflow-x: auto;
-            margin-top: 24px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
+        .table-container { overflow-x: auto; margin-top: 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
         th {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-            font-weight: 500;
-            background: var(--bg-dark);
-            position: sticky;
-            top: 0;
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);
+            font-family: 'Space Mono', monospace; font-weight: 500; background: var(--bg-dark); position: sticky; top: 0;
         }
-
-        td {
-            font-size: 14px;
-        }
-
-        tr:hover td {
-            background: var(--bg-card-hover);
-        }
-
-        .cnpj {
-            font-family: 'Space Mono', monospace;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .valor {
-            font-weight: 600;
-            font-family: 'Space Mono', monospace;
-        }
-
+        td { font-size: 14px; }
+        tr:hover td { background: var(--bg-card-hover); }
+        .cnpj { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text-secondary); }
+        .valor { font-weight: 600; font-family: 'Space Mono', monospace; }
         .valor.faturamento { color: var(--accent-green); }
         .valor.folha { color: var(--accent-blue); }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .badge.grupo {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--accent-green);
-        }
-
-        .evolution {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .evolution.positive {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--accent-green);
-        }
-
-        .evolution.negative {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--accent-red);
-        }
-
-        .scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .scrollbar::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-
-        .scrollbar::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .filters {
-                flex-direction: column;
-            }
-            select, input {
-                width: 100%;
-            }
-        }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+        .badge.grupo { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .evolution { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; font-family: 'Space Mono', monospace; }
+        .evolution.positive { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .evolution.negative { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+        .loading { display: flex; align-items: center; justify-content: center; height: 200px; color: var(--text-muted); }
+        @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .main-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } .filters { flex-direction: column; } select, input { width: 100%; } }
     </style>
 </head>
 <body>
@@ -458,56 +150,40 @@
                 </div>
             </div>
         </header>
-
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Faturamento Total</div>
                 <div class="stat-value green" id="totalFaturamento">R$ 0</div>
-                <div class="stat-change positive" id="changeFaturamento">
-                    <span>↑</span> 0% vs ano anterior
-                </div>
+                <div class="stat-change positive" id="changeFaturamento"><span>↑</span> 0% vs ano anterior</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Folha Total</div>
                 <div class="stat-value blue" id="totalFolha">R$ 0</div>
-                <div class="stat-change" id="changeFolha">
-                    <span>↑</span> 0% vs ano anterior
-                </div>
+                <div class="stat-change" id="changeFolha"><span>↑</span> 0% vs ano anterior</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Empresas Ativas</div>
                 <div class="stat-value" id="totalEmpresas">0</div>
-                <div class="stat-change" style="color: var(--text-muted);">
-                    em <span id="totalGrupos">0</span> grupos
-                </div>
+                <div class="stat-change" style="color: var(--text-muted);">em <span id="totalGrupos">0</span> grupos</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Margem Média</div>
                 <div class="stat-value orange" id="margemMedia">0%</div>
-                <div class="stat-change" style="color: var(--text-muted);">
-                    (Faturamento - Folha) / Faturamento
-                </div>
+                <div class="stat-change" style="color: var(--text-muted);">(Faturamento - Folha) / Faturamento</div>
             </div>
         </div>
-
         <div class="filters">
             <div class="filter-group">
                 <label>Período</label>
-                <select id="filterAno">
-                    <option value="">Todos os anos</option>
-                </select>
+                <select id="filterAno"><option value="">Todos os anos</option></select>
             </div>
             <div class="filter-group">
                 <label>Grupo</label>
-                <select id="filterGrupo">
-                    <option value="">Todos os grupos</option>
-                </select>
+                <select id="filterGrupo"><option value="">Todos os grupos</option></select>
             </div>
             <div class="filter-group">
                 <label>Empresa</label>
-                <select id="filterEmpresa">
-                    <option value="">Todas as empresas</option>
-                </select>
+                <select id="filterEmpresa"><option value="">Todas as empresas</option></select>
             </div>
             <div class="filter-group">
                 <label>Agrupar por</label>
@@ -517,7 +193,6 @@
                 </div>
             </div>
         </div>
-
         <div class="main-grid">
             <div class="card">
                 <div class="card-header">
@@ -526,23 +201,18 @@
                         <div class="card-subtitle">Faturamento vs Folha por período</div>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="chartEvolucao"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="chartEvolucao"></canvas></div>
             </div>
             <div class="card">
                 <div class="card-header">
                     <div>
                         <div class="card-title">Ranking de Crescimento</div>
-                        <div class="card-subtitle" id="rankingSubtitle">Top 10 maiores evoluções 2024 vs 2025</div>
+                        <div class="card-subtitle" id="rankingSubtitle">Top 15 maiores evoluções</div>
                     </div>
                 </div>
-                <div class="ranking-list scrollbar" id="rankingList">
-                    <div class="loading">Carregando...</div>
-                </div>
+                <div class="ranking-list" id="rankingList"><div class="loading">Carregando...</div></div>
             </div>
         </div>
-
         <div class="card">
             <div class="card-header">
                 <div>
@@ -550,108 +220,47 @@
                     <div class="card-subtitle" id="tableSubtitle">Dados consolidados</div>
                 </div>
             </div>
-            <div class="table-container scrollbar" style="max-height: 500px; overflow-y: auto;">
+            <div class="table-container" style="max-height: 500px; overflow-y: auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Empresa</th>
-                            <th>CNPJ</th>
-                            <th>Grupo</th>
-                            <th>Fat. 2024</th>
-                            <th>Fat. 2025</th>
-                            <th>Evolução</th>
-                            <th>Folha 2024</th>
-                            <th>Folha 2025</th>
-                            <th>Margem</th>
+                            <th>Empresa</th><th>CNPJ</th><th>Grupo</th>
+                            <th>Fat. 2024</th><th>Fat. 2025</th><th>Evolução</th>
+                            <th>Folha 2024</th><th>Folha 2025</th><th>Margem</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="9" class="loading">Carregando...</td></tr>
-                    </tbody>
+                    <tbody id="tableBody"><tr><td colspan="9" class="loading">Carregando...</td></tr></tbody>
                 </table>
             </div>
         </div>
     </div>
-
+    <script src="dados.js"></script>
     <script>
-        // Dados serão carregados aqui
         let dadosBrutos = [];
         let chartEvolucao = null;
         let modoAgrupamento = 'empresa';
 
-        // Carregar dados
-        async function carregarDados() {
-            try {
-                const response = await fetch('./dados.json');
-                dadosBrutos = await response.json();
-                console.log('Dados carregados:', dadosBrutos.length, 'registros');
-                inicializarFiltros();
-                atualizarDashboard();
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-                // Tentar carregar dados inline se o fetch falhar
-                if (typeof DADOS_INLINE !== 'undefined') {
-                    dadosBrutos = DADOS_INLINE;
-                    inicializarFiltros();
-                    atualizarDashboard();
-                }
-            }
-        }
-
         function formatarMoeda(valor) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(valor);
-        }
-
-        function formatarPercentual(valor) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'percent',
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 1
-            }).format(valor / 100);
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(valor);
         }
 
         function inicializarFiltros() {
-            // Anos
             const anos = [...new Set(dadosBrutos.map(d => d.ANO))].sort();
             const selectAno = document.getElementById('filterAno');
-            anos.forEach(ano => {
-                const opt = document.createElement('option');
-                opt.value = ano;
-                opt.textContent = ano;
-                selectAno.appendChild(opt);
-            });
+            anos.forEach(ano => { const opt = document.createElement('option'); opt.value = ano; opt.textContent = ano; selectAno.appendChild(opt); });
 
-            // Grupos
             const grupos = [...new Set(dadosBrutos.filter(d => d.GRUPO).map(d => d.GRUPO))].sort();
             const selectGrupo = document.getElementById('filterGrupo');
-            grupos.forEach(grupo => {
-                const opt = document.createElement('option');
-                opt.value = grupo;
-                opt.textContent = grupo;
-                selectGrupo.appendChild(opt);
-            });
+            grupos.forEach(grupo => { const opt = document.createElement('option'); opt.value = grupo; opt.textContent = grupo; selectGrupo.appendChild(opt); });
 
-            // Empresas
             const empresas = [...new Set(dadosBrutos.map(d => d.APELIDO || d.FANTASIA || d.RAZAO))].sort();
             const selectEmpresa = document.getElementById('filterEmpresa');
-            empresas.forEach(emp => {
-                const opt = document.createElement('option');
-                opt.value = emp;
-                opt.textContent = emp;
-                selectEmpresa.appendChild(opt);
-            });
+            empresas.forEach(emp => { const opt = document.createElement('option'); opt.value = emp; opt.textContent = emp; selectEmpresa.appendChild(opt); });
 
-            // Event listeners
             selectAno.addEventListener('change', atualizarDashboard);
             selectGrupo.addEventListener('change', atualizarDashboard);
             selectEmpresa.addEventListener('change', atualizarDashboard);
 
-            // Toggle agrupamento
             document.querySelectorAll('.toggle-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
@@ -664,51 +273,32 @@
 
         function filtrarDados() {
             let dados = [...dadosBrutos];
-            
             const ano = document.getElementById('filterAno').value;
             const grupo = document.getElementById('filterGrupo').value;
             const empresa = document.getElementById('filterEmpresa').value;
-
             if (ano) dados = dados.filter(d => d.ANO == ano);
             if (grupo) dados = dados.filter(d => d.GRUPO === grupo);
             if (empresa) dados = dados.filter(d => (d.APELIDO || d.FANTASIA || d.RAZAO) === empresa);
-
             return dados;
         }
 
         function agruparDados(dados) {
             const agrupado = {};
-            
             dados.forEach(d => {
                 const chave = modoAgrupamento === 'grupo' && d.GRUPO ? d.GRUPO : (d.APELIDO || d.FANTASIA || d.RAZAO);
                 const periodo = d.PERIODO;
-                
-                if (!agrupado[chave]) {
-                    agrupado[chave] = {
-                        nome: chave,
-                        cnpj: d.CNPJ,
-                        grupo: d.GRUPO,
-                        periodos: {}
-                    };
-                }
-                
-                if (!agrupado[chave].periodos[periodo]) {
-                    agrupado[chave].periodos[periodo] = { faturamento: 0, folha: 0 };
-                }
-                
+                if (!agrupado[chave]) agrupado[chave] = { nome: chave, cnpj: d.CNPJ, grupo: d.GRUPO, periodos: {} };
+                if (!agrupado[chave].periodos[periodo]) agrupado[chave].periodos[periodo] = { faturamento: 0, folha: 0 };
                 agrupado[chave].periodos[periodo].faturamento += d.FATURAMENTO || 0;
                 agrupado[chave].periodos[periodo].folha += d.FOLHA || 0;
             });
-
             return agrupado;
         }
 
         function calcularTotaisPorAno(dados) {
             const porAno = {};
             dados.forEach(d => {
-                if (!porAno[d.ANO]) {
-                    porAno[d.ANO] = { faturamento: 0, folha: 0 };
-                }
+                if (!porAno[d.ANO]) porAno[d.ANO] = { faturamento: 0, folha: 0 };
                 porAno[d.ANO].faturamento += d.FATURAMENTO || 0;
                 porAno[d.ANO].folha += d.FOLHA || 0;
             });
@@ -716,43 +306,25 @@
         }
 
         function atualizarCards(dados) {
-            const totais = dados.reduce((acc, d) => {
-                acc.faturamento += d.FATURAMENTO || 0;
-                acc.folha += d.FOLHA || 0;
-                return acc;
-            }, { faturamento: 0, folha: 0 });
-
+            const totais = dados.reduce((acc, d) => { acc.faturamento += d.FATURAMENTO || 0; acc.folha += d.FOLHA || 0; return acc; }, { faturamento: 0, folha: 0 });
             const porAno = calcularTotaisPorAno(dados);
             const anos = Object.keys(porAno).sort();
-            
             let changeFat = 0, changeFolha = 0;
             if (anos.length >= 2) {
                 const anoAtual = anos[anos.length - 1];
                 const anoAnterior = anos[anos.length - 2];
-                if (porAno[anoAnterior].faturamento > 0) {
-                    changeFat = ((porAno[anoAtual].faturamento - porAno[anoAnterior].faturamento) / porAno[anoAnterior].faturamento) * 100;
-                }
-                if (porAno[anoAnterior].folha > 0) {
-                    changeFolha = ((porAno[anoAtual].folha - porAno[anoAnterior].folha) / porAno[anoAnterior].folha) * 100;
-                }
+                if (porAno[anoAnterior].faturamento > 0) changeFat = ((porAno[anoAtual].faturamento - porAno[anoAnterior].faturamento) / porAno[anoAnterior].faturamento) * 100;
+                if (porAno[anoAnterior].folha > 0) changeFolha = ((porAno[anoAtual].folha - porAno[anoAnterior].folha) / porAno[anoAnterior].folha) * 100;
             }
-
             document.getElementById('totalFaturamento').textContent = formatarMoeda(totais.faturamento);
             document.getElementById('totalFolha').textContent = formatarMoeda(totais.folha);
-            
-            const empresasUnicas = new Set(dados.map(d => d.CNPJ)).size;
-            const gruposUnicos = new Set(dados.filter(d => d.GRUPO).map(d => d.GRUPO)).size;
-            document.getElementById('totalEmpresas').textContent = empresasUnicas;
-            document.getElementById('totalGrupos').textContent = gruposUnicos;
-
+            document.getElementById('totalEmpresas').textContent = new Set(dados.map(d => d.CNPJ)).size;
+            document.getElementById('totalGrupos').textContent = new Set(dados.filter(d => d.GRUPO).map(d => d.GRUPO)).size;
             const margem = totais.faturamento > 0 ? ((totais.faturamento - totais.folha) / totais.faturamento) * 100 : 0;
             document.getElementById('margemMedia').textContent = margem.toFixed(1) + '%';
-
-            // Atualizar variações
             const changeFatEl = document.getElementById('changeFaturamento');
             changeFatEl.innerHTML = `<span>${changeFat >= 0 ? '↑' : '↓'}</span> ${Math.abs(changeFat).toFixed(1)}% vs ano anterior`;
             changeFatEl.className = `stat-change ${changeFat >= 0 ? 'positive' : 'negative'}`;
-
             const changeFolhaEl = document.getElementById('changeFolha');
             changeFolhaEl.innerHTML = `<span>${changeFolha >= 0 ? '↑' : '↓'}</span> ${Math.abs(changeFolha).toFixed(1)}% vs ano anterior`;
             changeFolhaEl.className = `stat-change ${changeFolha >= 0 ? 'positive' : 'negative'}`;
@@ -761,96 +333,34 @@
         function atualizarGrafico(dados) {
             const porPeriodo = {};
             dados.forEach(d => {
-                if (!porPeriodo[d.PERIODO]) {
-                    porPeriodo[d.PERIODO] = { faturamento: 0, folha: 0 };
-                }
+                if (!porPeriodo[d.PERIODO]) porPeriodo[d.PERIODO] = { faturamento: 0, folha: 0 };
                 porPeriodo[d.PERIODO].faturamento += d.FATURAMENTO || 0;
                 porPeriodo[d.PERIODO].folha += d.FOLHA || 0;
             });
-
             const periodos = Object.keys(porPeriodo).sort();
             const faturamentos = periodos.map(p => porPeriodo[p].faturamento);
             const folhas = periodos.map(p => porPeriodo[p].folha);
-
-            if (chartEvolucao) {
-                chartEvolucao.destroy();
-            }
-
+            if (chartEvolucao) chartEvolucao.destroy();
             const ctx = document.getElementById('chartEvolucao').getContext('2d');
             chartEvolucao = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: periodos,
                     datasets: [
-                        {
-                            label: 'Faturamento',
-                            data: faturamentos,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 6
-                        },
-                        {
-                            label: 'Folha',
-                            data: folhas,
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 2,
-                            pointHoverRadius: 6
-                        }
+                        { label: 'Faturamento', data: faturamentos, borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)', fill: true, tension: 0.4, pointRadius: 2, pointHoverRadius: 6 },
+                        { label: 'Folha', data: folhas, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.4, pointRadius: 2, pointHoverRadius: 6 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
                     plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#9ca3af',
-                                font: { family: 'DM Sans' },
-                                usePointStyle: true,
-                                pointStyle: 'circle'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#1f2937',
-                            titleColor: '#f3f4f6',
-                            bodyColor: '#9ca3af',
-                            borderColor: '#374151',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + formatarMoeda(context.raw);
-                                }
-                            }
-                        }
+                        legend: { position: 'top', labels: { color: '#9ca3af', font: { family: 'DM Sans' }, usePointStyle: true, pointStyle: 'circle' } },
+                        tooltip: { backgroundColor: '#1f2937', titleColor: '#f3f4f6', bodyColor: '#9ca3af', borderColor: '#374151', borderWidth: 1, callbacks: { label: ctx => ctx.dataset.label + ': ' + formatarMoeda(ctx.raw) } }
                     },
                     scales: {
-                        x: {
-                            grid: { color: 'rgba(55, 65, 81, 0.5)' },
-                            ticks: { color: '#6b7280', font: { family: 'Space Mono', size: 10 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(55, 65, 81, 0.5)' },
-                            ticks: {
-                                color: '#6b7280',
-                                font: { family: 'Space Mono', size: 10 },
-                                callback: function(value) {
-                                    if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
-                                    if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
-                                    return value;
-                                }
-                            }
-                        }
+                        x: { grid: { color: 'rgba(55, 65, 81, 0.5)' }, ticks: { color: '#6b7280', font: { family: 'Space Mono', size: 10 } } },
+                        y: { grid: { color: 'rgba(55, 65, 81, 0.5)' }, ticks: { color: '#6b7280', font: { family: 'Space Mono', size: 10 }, callback: v => v >= 1000000 ? (v/1000000).toFixed(1)+'M' : v >= 1000 ? (v/1000).toFixed(0)+'K' : v } }
                     }
                 }
             });
@@ -858,103 +368,52 @@
 
         function atualizarRanking(dados) {
             const agrupado = agruparDados(dados);
-            
-            // Calcular evolução 2024 vs 2025
             const evolucoes = Object.values(agrupado).map(item => {
                 let fat2024 = 0, fat2025 = 0;
                 Object.entries(item.periodos).forEach(([periodo, valores]) => {
                     if (periodo.startsWith('2024')) fat2024 += valores.faturamento;
                     if (periodo.startsWith('2025')) fat2025 += valores.faturamento;
                 });
-                
                 const evolucao = fat2024 > 0 ? ((fat2025 - fat2024) / fat2024) * 100 : (fat2025 > 0 ? 100 : 0);
-                
-                return {
-                    nome: item.nome,
-                    grupo: item.grupo,
-                    fat2024,
-                    fat2025,
-                    evolucao
-                };
-            }).filter(e => e.fat2024 > 0 || e.fat2025 > 0)
-              .sort((a, b) => b.evolucao - a.evolucao)
-              .slice(0, 15);
+                return { nome: item.nome, grupo: item.grupo, fat2024, fat2025, evolucao };
+            }).filter(e => e.fat2024 > 0 || e.fat2025 > 0).sort((a, b) => b.evolucao - a.evolucao).slice(0, 15);
 
-            const container = document.getElementById('rankingList');
-            container.innerHTML = evolucoes.map((item, idx) => {
+            document.getElementById('rankingList').innerHTML = evolucoes.map((item, idx) => {
                 const posClass = idx === 0 ? 'gold' : idx === 1 ? 'silver' : idx === 2 ? 'bronze' : 'normal';
                 const changeClass = item.evolucao >= 0 ? 'positive' : 'negative';
-                const changeIcon = item.evolucao >= 0 ? '↑' : '↓';
-                
-                return `
-                    <div class="ranking-item">
-                        <div class="ranking-position ${posClass}">${idx + 1}</div>
-                        <div class="ranking-info">
-                            <div class="ranking-name">${item.nome}</div>
-                            <div class="ranking-details">${item.grupo || 'Sem grupo'}</div>
-                        </div>
-                        <div class="ranking-value">
-                            <div class="ranking-amount">${formatarMoeda(item.fat2025)}</div>
-                            <div class="ranking-change ${changeClass}">${changeIcon} ${Math.abs(item.evolucao).toFixed(1)}%</div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="ranking-item">
+                    <div class="ranking-position ${posClass}">${idx + 1}</div>
+                    <div class="ranking-info"><div class="ranking-name">${item.nome}</div><div class="ranking-details">${item.grupo || 'Sem grupo'}</div></div>
+                    <div class="ranking-value"><div class="ranking-amount">${formatarMoeda(item.fat2025)}</div><div class="ranking-change ${changeClass}">${item.evolucao >= 0 ? '↑' : '↓'} ${Math.abs(item.evolucao).toFixed(1)}%</div></div>
+                </div>`;
             }).join('');
         }
 
         function atualizarTabela(dados) {
             const agrupado = agruparDados(dados);
-            
             const linhas = Object.values(agrupado).map(item => {
                 let fat2024 = 0, fat2025 = 0, folha2024 = 0, folha2025 = 0;
                 Object.entries(item.periodos).forEach(([periodo, valores]) => {
-                    if (periodo.startsWith('2024')) {
-                        fat2024 += valores.faturamento;
-                        folha2024 += valores.folha;
-                    }
-                    if (periodo.startsWith('2025')) {
-                        fat2025 += valores.faturamento;
-                        folha2025 += valores.folha;
-                    }
+                    if (periodo.startsWith('2024')) { fat2024 += valores.faturamento; folha2024 += valores.folha; }
+                    if (periodo.startsWith('2025')) { fat2025 += valores.faturamento; folha2025 += valores.folha; }
                 });
-                
                 const evolucao = fat2024 > 0 ? ((fat2025 - fat2024) / fat2024) * 100 : 0;
                 const margem = fat2025 > 0 ? ((fat2025 - folha2025) / fat2025) * 100 : 0;
-                
-                return {
-                    nome: item.nome,
-                    cnpj: item.cnpj,
-                    grupo: item.grupo,
-                    fat2024,
-                    fat2025,
-                    folha2024,
-                    folha2025,
-                    evolucao,
-                    margem
-                };
+                return { nome: item.nome, cnpj: item.cnpj, grupo: item.grupo, fat2024, fat2025, folha2024, folha2025, evolucao, margem };
             }).sort((a, b) => b.fat2025 - a.fat2025);
 
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = linhas.map(item => {
-                const evolClass = item.evolucao >= 0 ? 'positive' : 'negative';
-                const evolIcon = item.evolucao >= 0 ? '↑' : '↓';
-                
-                return `
-                    <tr>
-                        <td><strong>${item.nome}</strong></td>
-                        <td class="cnpj">${item.cnpj || '-'}</td>
-                        <td>${item.grupo ? `<span class="badge grupo">${item.grupo}</span>` : '-'}</td>
-                        <td class="valor faturamento">${formatarMoeda(item.fat2024)}</td>
-                        <td class="valor faturamento">${formatarMoeda(item.fat2025)}</td>
-                        <td><span class="evolution ${evolClass}">${evolIcon} ${Math.abs(item.evolucao).toFixed(1)}%</span></td>
-                        <td class="valor folha">${formatarMoeda(item.folha2024)}</td>
-                        <td class="valor folha">${formatarMoeda(item.folha2025)}</td>
-                        <td><strong>${item.margem.toFixed(1)}%</strong></td>
-                    </tr>
-                `;
-            }).join('');
-
-            document.getElementById('tableSubtitle').textContent = `${linhas.length} ${modoAgrupamento === 'grupo' ? 'grupos' : 'empresas'} encontrados`;
+            document.getElementById('tableBody').innerHTML = linhas.map(item => `<tr>
+                <td><strong>${item.nome}</strong></td>
+                <td class="cnpj">${item.cnpj || '-'}</td>
+                <td>${item.grupo ? `<span class="badge grupo">${item.grupo}</span>` : '-'}</td>
+                <td class="valor faturamento">${formatarMoeda(item.fat2024)}</td>
+                <td class="valor faturamento">${formatarMoeda(item.fat2025)}</td>
+                <td><span class="evolution ${item.evolucao >= 0 ? 'positive' : 'negative'}">${item.evolucao >= 0 ? '↑' : '↓'} ${Math.abs(item.evolucao).toFixed(1)}%</span></td>
+                <td class="valor folha">${formatarMoeda(item.folha2024)}</td>
+                <td class="valor folha">${formatarMoeda(item.folha2025)}</td>
+                <td><strong>${item.margem.toFixed(1)}%</strong></td>
+            </tr>`).join('');
+            document.getElementById('tableSubtitle').textContent = `${linhas.length} ${modoAgrupamento === 'grupo' ? 'grupos' : 'empresas'}`;
         }
 
         function atualizarDashboard() {
@@ -965,8 +424,12 @@
             atualizarTabela(dados);
         }
 
-        // Inicializar
-        carregarDados();
+        // Inicializar com dados inline
+        if (typeof DADOS_INLINE !== 'undefined') {
+            dadosBrutos = DADOS_INLINE;
+            inicializarFiltros();
+            atualizarDashboard();
+        }
     </script>
 </body>
 </html>
